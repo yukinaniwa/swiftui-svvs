@@ -31,19 +31,30 @@ class HomeViewState: HomeViewStateProtocol {
             }
             .store(in: &cancellables)
     }
+}
 
+extension HomeViewState {
     /// ユーザ名付きの挨拶文字列
     var userGreeting: String {
         guard let user else { return "名前が取得できません" }
         return "こんにちは \(user.name)さん"
     }
-    
-    func didTapNoteButton() async {
-        self.shouldNavigateNote = true
-    }
+}
 
+// MARK: - Life Cycle
+
+extension HomeViewState {
     /// 画面が表示された
     func didAppear() async {
         self.shouldNavigateNote = false
+    }
+}
+
+// MARK: - Actions
+
+extension HomeViewState {
+    ///ノート表示ボタンが押下された
+    func didTapNoteButton() async {
+        self.shouldNavigateNote = true
     }
 }

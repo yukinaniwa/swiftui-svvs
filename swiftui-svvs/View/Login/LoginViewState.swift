@@ -47,18 +47,26 @@ class LoginViewState: LoginViewStateProtocol {
             }
             .store(in: &cancellables)
     }
+}
 
+// MARK: - Life Cycle
+
+extension LoginViewState {
+    /// 画面が表示された
+    func didAppear() async {
+        self.loginState = .notLoggedIn
+        self.shouldNavigateHome = false
+    }
+}
+
+// MARK: - Actions
+
+extension LoginViewState {
     /// ログインボタン押下された
     func didTapLoginButton() async {
         Task { @MainActor in
             self.loginState = .loggingIn
         }
         await self.store.login(self.userId, self.password)
-    }
-
-    /// 画面が表示された
-    func didAppear() async {
-        self.loginState = .notLoggedIn
-        self.shouldNavigateHome = false
     }
 }

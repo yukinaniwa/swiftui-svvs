@@ -47,7 +47,27 @@ class NoteViewState: NoteViewStateProtocol {
             }
             .store(in: &cancellables)
     }
+}
 
+// MARK: - Life Cycle
+
+extension NoteViewState {
+    /// 画面が表示された
+    func didAppear() async {
+        self.apiState = .none
+    }
+}
+
+// MARK: - Actions
+
+extension NoteViewState {
+    
+    /// モーダルを表示
+    func didTapModalButton() async {
+        showingModal.toggle()
+    }
+    
+    /// ノートデータの取得するボタンが押下された
     func didTapGetNoteButton() async {
         if let id = await userStore.getID() {
             self.apiState = .loading
@@ -55,12 +75,4 @@ class NoteViewState: NoteViewStateProtocol {
         }
     }
 
-    /// 画面が表示された
-    func didAppear() async {
-        self.apiState = .none
-    }
-    
-    func didTapModalButton() async {
-        showingModal.toggle()
-    }
 }

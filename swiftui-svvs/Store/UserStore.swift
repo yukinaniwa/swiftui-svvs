@@ -35,7 +35,11 @@ class UserStore: ObservableObject, UserStoreProtocol {
             }
         }
     }
-    
+}
+
+// MARK: - getter
+
+extension UserStore {
     func getID() async -> String? {
         self.user?.id
     }
